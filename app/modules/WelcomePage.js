@@ -13,7 +13,9 @@ WelcomePage.load = function () {
   $('#open').on('submit', async function onLogin (e) {
     e.preventDefault()
     let details = Utils.getItemsFromForm('open')
-  	console.log(details)
+    StateManager.change('state', 'log')
+    StateManager.change('files', [details.log])
+    StateManager.update()
   })
 }
 
@@ -23,8 +25,10 @@ WelcomePage.load = function () {
  * @return {undefined}
  */
 function fillFields () {
-  $('#host_outgoing').val(process.env.HOST_OUTGOING)
-  $('#secure').prop('checked', process.env.SECURE === 'true')
+  $('#log').val('C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo')
+  $('#quick').prop('checked', true)
+  // $('#log').val(process.env.HOST_OUTGOING)
+  // $('#secure').prop('checked', process.env.SECURE === 'true')
 }
 
 module.exports = WelcomePage

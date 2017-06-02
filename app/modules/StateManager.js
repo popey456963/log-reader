@@ -30,9 +30,9 @@ StateManager.prototype.update = function () {
       logger.debug(`This is a new user, we'll welcome them in to the application.`)
       router.navigate('/welcome')
       break
-    case 'mail':
-      logger.debug(`This user has logged in, we need to show them their email.`)
-      router.navigate('/mail')
+    case 'log':
+      logger.debug(`This user has logged in, we need to show them their log file.`)
+      router.navigate('/log')
       break
     default:
       logger.warning(`Unknown state?  This should never happen.  The state was ${state.state}`)

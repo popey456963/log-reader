@@ -40,7 +40,8 @@
     "materialize-css": "^0.98.2",
     "navigo": "^4.5.1",
     "path": "^0.12.7",
-    "stack-trace": "0.0.9"
+    "stack-trace": "0.0.9",
+    "tail": "^1.2.1"
   },
   "devDependencies": {
     "ava": "^0.19.1",
