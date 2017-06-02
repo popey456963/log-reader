@@ -1,0 +1,60 @@
+{
+  "name": "csgo_file",
+  "productName": "csgo_file",
+  "version": "0.1.0",
+  "description": "An open source log reader.",
+  "license": "MIT",
+  "repository": "popey456963/csgo_file",
+  "author": {
+    "name": "Alexander Craggs",
+    "email": "alexander@debenclipper.com",
+    "url": "github.com/popey456963/csgo_file"
+  },
+  "contributors": [],
+  "scripts": {
+    "test": "ava",
+    "start": "electron .",
+    "build": "echo \"DEPRECATED\" && electron-packager . --out=dist --asar --overwrite --all",
+    "pack": "build --dir",
+    "dist": "build"
+  },
+  "build": {
+    "appId": "com.codefined.csgo_file",
+    "mac": {
+      "category": "productivity"
+    }
+  },
+  "keywords": [
+    "electron-app",
+    "electron",
+    "csgo_file"
+  ],
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "dotenv": "^4.0.0",
+    "electron-debug": "^1.0.0",
+    "fs-jetpack": "^0.13.3",
+    "gulp": "^3.9.1",
+    "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "materialize-css": "^0.98.2",
+    "navigo": "^4.5.1",
+    "path": "^0.12.7",
+    "stack-trace": "0.0.9"
+  },
+  "devDependencies": {
+    "ava": "^0.19.1",
+    "devtron": "^1.4.0",
+    "electron": "^1.3.3",
+    "electron-bin-path": "^0.1.0",
+    "electron-builder": "^17.3.1",
+    "electron-packager": "^8.0.0",
+    "gulp": "^3.9.1",
+    "gulp-batch": "^1.0.5",
+    "gulp-plumber": "^1.1.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-watch": "^4.3.11",
+    "spectron": "^3.7.0",
+    "standard": "^10.0.2"
+  }
+}
