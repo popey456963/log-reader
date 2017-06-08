@@ -11,7 +11,7 @@ let display_default = {
   'top-left': {
     'damage_taken': true,
     'damage_given': true,
-    'round_start': true
+    'round_start': false
   },
   'middle-left': {
     'ttt_role': true,
@@ -19,13 +19,14 @@ let display_default = {
     'ttt_kill': true,
     'ttt_tase': true,
     'ttt': true,
-    'round_start': true
+    'round_start': false
   },
   'bottom-left': {
     'button': true,
     'cell_button': true, 
     'warden': true,
-    'round_start': true
+    'round_start': false,
+    'unknown': false
   },
   'top-right': {
     'msg': true,
@@ -42,7 +43,7 @@ let display_default = {
     'connected': true,
     'unknown_command': true,
     'failed_send': true,
-    'round_start': true
+    'round_start': false
   },
   'bottom-right': {
     'world_kill': true,
@@ -74,34 +75,43 @@ let lines = []
 let inSettingObject = false
 let settingDepth = 0
 
-const toastr_time = tidy ? 500 : 4000
+const toastr_time = 4000
 
 function LogPage () {}
 
-LogPage.load = async function () {
+LogPage.load = async function (shouldTidy) {
   if (!testLoaded('log')) return
 
   logger.debug(`We're loading up the log page now.`)
   StateManager.page('log', ['basic', 'log'])
 
+  tidy = shouldTidy
+
   if (tidy) {
     $('#progress').css('display', 'auto')
     await new Promise((a) => { fs.unlink(StateManager.state.files[0] + '.clean', a) })
+  } else {
+    $('#progress').css('display', 'none')
   }
 
   fs.readFile(StateManager.state.files[0], 'utf8', async (err, data) => {
-    for (let item of data.split('\n')) {
+    let array = data.split('\n')
+    let full_count = array.length
+    if (!tidy) array = array.slice(1).slice(-10000)
+    for (let item of array) {
       counter++
       if (counter % 100 == 0) {
         counter = 0
         total += 100
-        if (total % 10000 == 0) { break }
-        await (new Promise((a) => { setTimeout(a, 50) }))
+        if (tidy) {
+          $('#progress-bar').css('width', (total / full_count) + '%')
+        }
+        // if (total % 5000 == 0) { break }
+        if (!tidy) { await (new Promise((a) => { setTimeout(a, 50) })) }
       }
       item = LogPage.sortLine(item)
-      if (item) LogPage.displayItem(item)
+      if (item) LogPage.displayItem(item, true)
     }
-
     if (tidy) {
       await new Promise((a) => { fs.appendFile(StateManager.state.files[0] + '.clean', lines.join('\n'), a) })
       await new Promise((a) => { fs.unlink(StateManager.state.files[0], a) })
@@ -116,17 +126,18 @@ LogPage.load = async function () {
     if (line) LogPage.displayItem(line)
   })
 
-  tail.on('error', (error) => {d
+  tail.on('error', (error) => {
     console.log(error)
   })
 
   $(() => {
     $('.modal').modal()
+    $('#log').val(StateManager.state.files[0])
+    Materialize.updateTextFields()
     for (let div in display) {
       for (let group of Object.values(Regex.list)) {
         $(`#input-${div}`).append($(`<optgroup label="${group[0]}">`))
         for (let [index, item] of Object.entries(group[1])) {
-          console.log(index, displayShallow[index].indexOf(div) > -1, item)
           $(`#input-${div}`).append($(`<option value="${index}" ${ displayShallow[index].indexOf(div) > -1 ? /*'selected'*/ '' : ''}>${item}</option>`))
         }
         $(`#input-${div}`).append($(`</optgroup>`))
@@ -145,6 +156,7 @@ LogPage.load = async function () {
   })
 
   $('#save').click(() => {
+    StateManager.change('files', [$('#log').val()])
     for (let div in display) {
       let values = $(`#input-${div}`).val()
       display[div] = {}
@@ -159,9 +171,14 @@ LogPage.load = async function () {
     localStorage.setItem('display', '')
     display = JSON.parse((localStorage.getItem('display') || JSON.stringify(display_default)))
   })
+
+  $('#clean').click(() => {
+    $('#modal1').modal('close')
+    LogPage.load(true)
+  })
 }
 
-LogPage.displayItem = (item) => {
+LogPage.displayItem = (item, zoom) => {
   // if (hidden[item.type]) return false
 
   switch(item.type) {
@@ -170,8 +187,8 @@ LogPage.displayItem = (item) => {
       break
     case 'msg':
       let tags = `${o(item.data.dead)}${o(item.data.team)}${o(item.data.rank)}${o(item.data.donator)}`
-      if (tags != '') tags += ' '
-      LogPage.addItem(item.type, `> ${tags}${item.data.user}: ${item.data.message}`)
+      if (tags != '') tags = ' ' + tags
+      LogPage.addItem(item.type, `>${tags}${item.data.user}: ${item.data.message.trim()}`)
       break
     case 'damage_taken':
       LogPage.addItem(item.type, `<-- ${item.data.player} | ${item.data.damage} in ${item.data.hits} ${ item.data.hits > 1 ? 'hits' : 'hit' }`)
@@ -192,23 +209,25 @@ LogPage.displayItem = (item) => {
       LogPage.addItem(item.type, `[${item.data.time}] [${item.data.killer}] killed non-red [${item.data.player}]`)
       break
     case 'ttt_role':
-      LogPage.addItem(item.type, ` [TTT] You are a ${item.data.role}!`)
-      switch (item.data.role) {
-        case 'TRAITOR':
-          Materialize.toast('You are a traitor!', toastr_time)
-          break
-        case 'DETECTIVE':
-          Materialize.toast('You are a detective!', toastr_time)
-          break
-        case 'INNOCENT':
-          Materialize.toast('You are an innocent!', toastr_time)
-          break
-        default:
-          Materialize.toast(`You are a ${item.data.role}`, toastr_time)
+      LogPage.addItem(item.type, `You are a ${item.data.role}!`)
+      if (!zoom) {
+        switch (item.data.role) {
+          case 'TRAITOR':
+            Materialize.toast('You are a traitor!', toastr_time)
+            break
+          case 'DETECTIVE':
+            Materialize.toast('You are a detective!', toastr_time)
+            break
+          case 'INNOCENT':
+            Materialize.toast('You are an innocent!', toastr_time)
+            break
+          default:
+            Materialize.toast(`You are a ${item.data.role}`, toastr_time)
+        }
       }
       break
     case 'ttt':
-      LogPage.addItem(item.type, `${item.data}`)
+      LogPage.addItem(item.type, `${item.data.msg}`)
       break
     case 'round_start':
       LogPage.addItem(item.type, `<hr>`)
@@ -237,7 +256,10 @@ LogPage.addItem = (name, item) => {
 LogPage.sortLine = (line) => {
   line = line.replace(/(\r\n|\n|\r)/gm,"")
   if (LogPage.ignore(line)) return false
-  if (tidy) lines.push(line)
+  if (tidy) { 
+    lines.push(line)
+    return false
+  }
   let type = LogPage.typeOf(line)
   let data
 
@@ -246,6 +268,8 @@ LogPage.sortLine = (line) => {
     if      (regex[1] === '') data = ''
     else if (regex[1] === undefined) data = line
     else    data = LogPage.destructure(line, ...Regex.type[type])
+  } else {
+    data = line
   }
 
   return {

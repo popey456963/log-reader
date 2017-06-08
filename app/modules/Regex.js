@@ -102,7 +102,8 @@ module.exports.list = {
       'unknown_command': 'Unknown Commands',
       'failed_send': 'SM Network Issues',
       'lobby_set_data': 'Lobby Data',
-      'round_start': 'Round Seperator'
+      'round_start': 'Round Seperator',
+      'unknown': 'Unknown'
     }
   ],
   ttt: [
@@ -154,5 +155,6 @@ module.exports.type = {
   'ttt_damage': [/^\[[0-9]+:[0-9]+] -> \[(.*) \((.*)\) damaged (.*) \((.*)\) for (.*) damage with (.*)\](?: - (BAD ACTION))?/, []],
   'ttt_kill': [/^\[[0-9]+:[0-9]+] -> \[(.*) \((.*)\) killed (.*) \((.*)\) with (.*)\](?: - (BAD ACTION))?/, []],
   'ttt_tase': [/^-> \[(.*) \((.*)\) was tased by (.*)\]/, []],
-  'ttt': [/^ \[TTT\] /, undefined]
+  'ttt': [/^ \[TTT\] (.*)/, ['msg']],
+  'unknown': [/^.*/, undefined]
 }

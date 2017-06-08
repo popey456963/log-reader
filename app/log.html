@@ -1,6 +1,6 @@
 <div class="wrapper">
-  <div style="display: none;" id="progress" class="progress">
-      <div class="determinate" style="width: 0%"></div>
+  <div id="progress" class="progress">
+      <div id="progress-bar" class="determinate" style="width: 0%"></div>
   </div>
   <div class="row">
     <div class="col m5 no-padding overflow">
@@ -63,10 +63,15 @@
           <label>Bottom Right Panel</label>
         </div>
       </div>
+      <div class="input-field col s12 m12 l12">
+        <input type="text" name="log" id="log">
+        <label for="log">Log Location</label>
+      </div>
     </div>
     <div class="modal-footer">
-      <a href="#!" id="save" class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
-      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <a href="#!" id="save" class="modal-action green modal-close waves-effect waves-green btn-flat">Save</a>
+      <a href="#!" class="modal-action modal-close yellow waves-effect waves-green btn-flat">Cancel</a>
+      <a href="#!" id="clean" class="modal-action red modal-close waves-effect waves-red btn-flat">Clean Log (WIP)</a>
       <a href="#!" id="default" class="modal-action modal-close waves-effect waves-green btn-flat">Defaults</a>
     </div>
   </div>
