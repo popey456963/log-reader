@@ -19,7 +19,7 @@ Header.load = function () {
 }
 
 Header.setLoc = function (parts) {
-  parts = ['Femto'].concat(parts)
+  parts = ['Log Reader'].concat(parts)
 
   let html = ''
   for (let i = 0; i < parts.length; i++) {

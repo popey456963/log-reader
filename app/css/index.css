@@ -1,3 +1,11 @@
+// .modal-content {
+//   height: 600px;
+// }
+
+.dropdown-content {
+  max-height: 400px !important;
+}
+
 .materialize-red {
   background-color: #e51c23 !important; }
 
@@ -2291,7 +2299,7 @@ td, th {
   margin: 0.5rem 0 1rem 0;
   border: 1px solid #e0e0e0;
   border-radius: 2px;
-  overflow: hidden;
+  overflow: auto;
   position: relative; }
   .collection .collection-item {
     background-color: #fff;
@@ -2307,7 +2315,7 @@ td, th {
         position: absolute;
         width: 42px;
         height: 42px;
-        overflow: hidden;
+        overflow: auto;
         left: 15px;
         display: inline-block;
         vertical-align: middle; }

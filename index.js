@@ -10,7 +10,7 @@ global.app = app
 require('./app/helpers/logger')
 
 // adds debug features like hotkeys for triggering dev tools and reload
-require('electron-debug')({ showDevTools: true })
+require('electron-debug')({ enabled: true, showDevTools: false })
 
 // prevent window being garbage collected
 let windows = []
@@ -59,6 +59,7 @@ function openWindow (file) {
   windows[index].on('closed', ((i) => {
     return () => { onClosed(i) }
   })(index))
+  windows[index].webContents.openDevTools()
   windows[index].webContents.on('new-window', handleURL)
   windows[index].webContents.on('will-navigate', handleURL)
 }

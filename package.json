@@ -1,6 +1,6 @@
 {
-  "name": "csgo_file",
-  "productName": "csgo_file",
+  "name": "log-reader",
+  "productName": "Log Reader",
   "version": "0.1.0",
   "description": "An open source log reader.",
   "license": "MIT",
@@ -33,6 +33,7 @@
     "chalk": "^1.1.3",
     "dotenv": "^4.0.0",
     "electron-debug": "^1.0.0",
+    "file-tail": "^0.3.0",
     "fs-jetpack": "^0.13.3",
     "gulp": "^3.9.1",
     "jquery": "^3.2.1",

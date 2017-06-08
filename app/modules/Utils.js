@@ -1,4 +1,3 @@
-const moment = require('moment')
 const crypto = require('crypto')
 const util   = require('util')
 

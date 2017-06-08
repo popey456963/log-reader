@@ -25,7 +25,7 @@ WelcomePage.load = function () {
  * @return {undefined}
  */
 function fillFields () {
-  $('#log').val('C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo')
+  $('#log').val('C:\\Program Files (x86)\\Steam\\steamapps\\common\\Counter-Strike Global Offensive\\csgo\\console.log')
   $('#quick').prop('checked', true)
   // $('#log').val(process.env.HOST_OUTGOING)
   // $('#secure').prop('checked', process.env.SECURE === 'true')

@@ -1,25 +1,87 @@
 <div class="wrapper">
+  <div style="display: none;" id="progress" class="progress">
+      <div class="determinate" style="width: 0%"></div>
+  </div>
   <div class="row">
-    <div class="col m2 no-padding overflow">
-      <div class="row card-panel no-padding" id="folders">
+    <div class="col m5 no-padding overflow">
+      <div id="outside_top-left" style="height: 30%" class="card-panel collection">
+        <pre id="top-left"></pre>
+      </div>
+      <div id="outside_middle-left" style="height: 30%" class="card-panel collection">
+        <pre id="middle-left"></pre>
+      </div>
+      <div id="outside_bottom-left" style="height: 30%" class="card-panel collection">
+        <pre id="bottom-left"></pre>
       </div>
     </div>
-    <div class="col m10 overflow">
-      <div class="card-panel collection">
-        <pre id="logs"></pre>
+    <div class="col m7 overflow">
+      <div id="outside_top-right" style="height: 45.8%" class="card-panel collection">
+        <pre id="top-right"></pre>
+      </div>
+      <div id="outside_bottom-right" style="height: 45.8%" class="card-panel collection">
+        <pre id="bottom-right"></pre>
       </div>
     </div>
   </div>
-</div>
 
-<div class="fixed-action-btn">
-  <a id="compose-button" class="btn-floating btn-large teal">
-    <i class="large material-icons">mode_edit</i>
-  </a>
-  <ul>
-    <li><a id="refresh-button" class="btn-floating red"><i class="material-icons">report_problem</i></a></li>
-    <li><a class="btn-floating yellow darken-2"><i class="material-icons">settings</i></a></li>
-    <li><a class="btn-floating green"><i class="material-icons">help_outline</i></a></li>
-    <li><a class="btn-floating blue"><i class="material-icons">refresh</i></a></li>
-  </ul>
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <h4>Settings Menu</h4>
+      <div class="row">
+        <div class="input-field col s6">
+          <select id="input-top-left" multiple>
+            <option value="" disabled>Display The Following</option>
+          </select>
+          <label>Top Left Panel</label>
+        </div>
+        <div class="input-field col s6">
+          <select id="input-top-right" multiple>
+            <option value="" disabled>Display The Following</option>
+          </select>
+          <label>Top Right Panel</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select id="input-middle-left" multiple>
+            <option value="" disabled>Display The Following</option>
+          </select>
+          <label>Middle Left Panel</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <select id="input-bottom-left" multiple>
+            <option value="" disabled>Display The Following</option>
+          </select>
+          <label>Bottom Left Panel</label>
+        </div>
+        <div class="input-field col s6">
+          <select id="input-bottom-right" multiple>
+            <option value="" disabled>Display The Following</option>
+          </select>
+          <label>Bottom Right Panel</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" id="save" class="modal-action modal-close waves-effect waves-green btn-flat">Save</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      <a href="#!" id="default" class="modal-action modal-close waves-effect waves-green btn-flat">Defaults</a>
+    </div>
+  </div>
+
+  <div class="fixed-action-btn">
+    <a data-target="modal1" id="settings-button" class="btn-floating btn-large teal">
+      <i class="large material-icons">settings</i>
+    </a>
+    <!--
+      <ul>
+        <li><a id="refresh-button" class="btn-floating red"><i class="material-icons">report_problem</i></a></li>
+        <li><a class="btn-floating yellow darken-2"><i class="material-icons">settings</i></a></li>
+        <li><a class="btn-floating green"><i class="material-icons">help_outline</i></a></li>
+        <li><a class="btn-floating blue"><i class="material-icons">refresh</i></a></li>
+      </ul> 
+    -->
+  </div>
 </div>

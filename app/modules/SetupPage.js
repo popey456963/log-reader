@@ -38,6 +38,8 @@ SetupPage.load = function () {
     Desktop   - ${app.getPath('desktop')}
     Documents - ${app.getPath('documents')}`)
 
+  
+
   // refreshAllAccounts()
   // setInterval(refreshAllAccounts, 300000)
 

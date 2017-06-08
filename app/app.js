@@ -20,7 +20,7 @@ global.Header = require('./modules/Header')
 // WelcomePage, SetupPage and MailPage all handle the rendering of specific pages.
 global.WelcomePage = require('./modules/WelcomePage')
 global.SetupPage = require('./modules/SetupPage')
-global.LogPage = require('./modules/LogPage')
+global.LogPage = require('./modules/LogPage2')
 
 Header.load()
 
