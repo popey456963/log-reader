@@ -1,4 +1,5 @@
 const { ipcRenderer, remote }   = require('electron')
+const byline = require('byline')
 const Regex = require('./Regex.js')
 const Tail = require('file-tail')
 const fs = require('fs')
@@ -26,6 +27,8 @@ let display_default = {
     'cell_button': true, 
     'warden': true,
     'round_start': false,
+    'respawn_location': true,
+    'rename': true,
     'unknown': false
   },
   'top-right': {
@@ -41,7 +44,7 @@ let display_default = {
     'zones': true,
     'convar': false,
     'connected': true,
-    'unknown_command': true,
+    'unknown_command': false,
     'failed_send': true,
     'round_start': false
   },
@@ -94,29 +97,44 @@ LogPage.load = async function (shouldTidy) {
     $('#progress').css('display', 'none')
   }
 
-  fs.readFile(StateManager.state.files[0], 'utf8', async (err, data) => {
-    let array = data.split('\n')
-    let full_count = array.length
-    if (!tidy) array = array.slice(1).slice(-10000)
-    for (let item of array) {
-      counter++
-      if (counter % 100 == 0) {
-        counter = 0
-        total += 100
-        if (tidy) {
-          $('#progress-bar').css('width', (total / full_count) + '%')
-        }
-        // if (total % 5000 == 0) { break }
-        if (!tidy) { await (new Promise((a) => { setTimeout(a, 50) })) }
-      }
-      item = LogPage.sortLine(item)
-      if (item) LogPage.displayItem(item, true)
+  let stream = byline(fs.createReadStream(StateManager.state.files[0], { encoding: 'utf8' }))
+
+  // fs.readFile(StateManager.state.files[0], 'utf8', async (err, data) => {
+  //   if (err) logger.error(err)
+  //   let array = data.split('\n')
+  //   let full_count = array.length
+  //   if (!tidy) array = array.slice(1).slice(-10000)
+  //   for (let item of array) {
+  //     counter++
+  //     if (counter % 100 == 0) {
+  //       counter = 0
+  //       total += 100
+  //       if (tidy) {
+  //         $('#progress-bar').css('width', (total / full_count) + '%')
+  //       }
+  //       // if (total % 5000 == 0) { break }
+  //       if (!tidy) { await (new Promise((a) => { setTimeout(a, 50) })) }
+  //     }
+  //     item = LogPage.sortLine(item)
+  //     if (item) LogPage.displayItem(item, true)
+  //   }
+  //   if (tidy) {
+  //     await new Promise((a) => { fs.appendFile(StateManager.state.files[0] + '.clean', lines.join('\n'), a) })
+  //     await new Promise((a) => { fs.unlink(StateManager.state.files[0], a) })
+  //     await new Promise((a) => { fs.rename(StateManager.state.files[0] + '.clean', StateManager.state.files[0], a) })
+  //   }
+  // })
+
+  stream.on('data', async (line) => {
+    line = LogPage.sortLine(line)
+    if (line) LogPage.displayItem(line)
+
+    if (counter == 10) {
+      stream.pause()
+      await (new Promise((a) => { counter = 0; setTimeout(a, 10) }))
+      stream.resume()
     }
-    if (tidy) {
-      await new Promise((a) => { fs.appendFile(StateManager.state.files[0] + '.clean', lines.join('\n'), a) })
-      await new Promise((a) => { fs.unlink(StateManager.state.files[0], a) })
-      await new Promise((a) => { fs.rename(StateManager.state.files[0] + '.clean', StateManager.state.files[0], a) })
-    }
+    counter ++
   })
 
   let tail = Tail.startTailing(StateManager.state.files[0])
@@ -173,8 +191,10 @@ LogPage.load = async function (shouldTidy) {
   })
 
   $('#clean').click(() => {
-    $('#modal1').modal('close')
-    LogPage.load(true)
+    Materialize.toast('This has been disabled due to a known bug :(', toastr_time)
+    // $('#modal1').modal('close')
+    // LogPage.load(true)
+    
   })
 }
 
@@ -208,6 +228,9 @@ LogPage.displayItem = (item, zoom) => {
     case 'normal_kill':
       LogPage.addItem(item.type, `[${item.data.time}] [${item.data.killer}] killed non-red [${item.data.player}]`)
       break
+    case 'cell_button':
+      LogPage.addItem(item.type, `${item.data.player} pressed cell button.`)
+      break
     case 'ttt_role':
       LogPage.addItem(item.type, `You are a ${item.data.role}!`)
       if (!zoom) {
@@ -232,6 +255,10 @@ LogPage.displayItem = (item, zoom) => {
     case 'round_start':
       LogPage.addItem(item.type, `<hr>`)
       break
+    case 'rename':
+      LogPage.addItem(item.type, `Renamed '${item.data.from}'' to '${item.data.to}'`)
+    case 'respawn_location':
+      Materialize.toast(`You were respawned at ${item.data.x} ${item.data.y} ${item.data.z}`, toastr_time)
     default:
       if (typeof item.data == 'string') {
         LogPage.addItem(item.type, item.data)
@@ -267,6 +294,7 @@ LogPage.sortLine = (line) => {
   if (typeof regex != 'undefined') {
     if      (regex[1] === '') data = ''
     else if (regex[1] === undefined) data = line
+    else if (typeof regex[1] === 'object' && regex[1].length === 0) data = line
     else    data = LogPage.destructure(line, ...Regex.type[type])
   } else {
     data = line

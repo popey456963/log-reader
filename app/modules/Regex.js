@@ -13,6 +13,7 @@ module.exports.error = [
   /^Avatar image for user /,
   /Host_WriteConfiguration:/,
   /^Shutdown .* predictable entities/,
+  /^OGS PK VIOLATION:/,
   /^Stopping: Channel:/,
   /^CLoadingScreenScaleform/,
   /^Notification CDN download result/,
@@ -91,7 +92,9 @@ module.exports.list = {
       'tasers': 'Spawning Tasers',
       'warden_debug': 'Warden Debug',
       'drops': 'Drops',
-      'zones': 'Zones'
+      'zones': 'Zones',
+      'respawn_location': 'Respawn Location',
+      'rename': 'Player Rename'
     }
   ],
   csgo: [
@@ -127,12 +130,12 @@ module.exports.type = {
   'damage_given': [/Damage Given to "(.*)" - (.*) in (.*) hit{0,1}/, ['player', 'damage', 'hits']], // DONE
   'begin_damage_taken': [/Player: .* - Damage Taken/, []], // DONE
   'damage_taken': [/Damage Taken from "(.*)" - (.*) in (.*) hit{0,1}/, ['player', 'damage', 'hits']], // DONE
-  'world_kill': [/\[([0-9]+:[0-9]+:[0-9]+)\].*\[(.*)\] @tx([0-9]+) @px([0-9]+) died from '(.*)'/, ['time', 'player', 'time_slot', 'position_slot', 'killer']], // DONE
+  'world_kill': [/\[([0-9]+:[0-9]+:[0-9]+)\].*\[(.*)\] @tx-?([0-9]+) @px-?([0-9]+) died from '(.*)'/, ['time', 'player', 'time_slot', 'position_slot', 'killer']], // DONE
   'red_kill': [/\[([0-9]+:[0-9]+:[0-9]+)\] .*Red kill by .*\[(.*)\] on \[(.*)\] stck\[([-0-9]+)\] fz\[([-0-9]+)\] ljmp\[([-0-9]+)\] lcrh\[([-0-9]+)\] lpckup\[([-0-9]+)\] dir\[(.*)\] reason\[(.*)\]/, ['time', 'killer', 'player', 'stack', 'freeze', 'jump', 'crouch', 'pickup', 'direction', 'reason']], // DONE
   'pink_kill': [/\[([0-9]+:[0-9]+:[0-9]+)\] .*Pink kill by .*\[(.*)\] on \[(.*)\] @tx-([-0-9]+) @px-([-0-9]+) fd\[([-0-9]+)\] stck\[([-0-9]+)\] fz\[([-0-9]+)\] ljmp\[([-0-9]+)\] lcrh\[([-0-9]+)\] lpckup\[([-0-9]+)\] dir\[(.*)\]/, ['time', 'killer', 'player', 'tx', 'px', 'freeday', 'stack', 'freeze', 'jump', 'crouch', 'pickup', 'direction']], // DONE
   'normal_kill': [/\[([0-9]+:[0-9]+:[0-9]+)\] .*Non red kill by .*\[(.*)\] on \[(.*)\] @tx([-0-9]+) @px([-0-9]+) fd\[([-0-9]+)\] stck\[([-0-9]+)\] fz\[([-0-9]+)\] ljmp\[([-0-9]+)\] lcrh\[([-0-9]+)\] lpckup\[([-0-9]+)\] dir\[(.*)\]/, ['time', 'killer', 'player', 'tx', 'px', 'freeday', 'stack', 'freeze', 'jump', 'crouch', 'pickup', 'direction']], // DONE
   'button': [/\[[0-9]+:[0-9]+:[0-9]+\]- \[.*\] activated \[.*\]\[[0-9]+\]\[[0-9]+\] button/, []], // DONE
-  'cell_button': [/'.*' pressed cellbutton/, []],
+  'cell_button': [/'(.*)' pressed cellbutton/, ['player']], // DONE
   'begin_settings': [/settings {|    ExtendedServerInfo {|Settings {/, []],
   'balancer': [/\[balancer\] .* Switch worked setting g_iSwithchingTo to 0/, []],
   'connected': [/ connected\.$/, []], // DONE
@@ -156,5 +159,7 @@ module.exports.type = {
   'ttt_kill': [/^\[[0-9]+:[0-9]+] -> \[(.*) \((.*)\) killed (.*) \((.*)\) with (.*)\](?: - (BAD ACTION))?/, []],
   'ttt_tase': [/^-> \[(.*) \((.*)\) was tased by (.*)\]/, []],
   'ttt': [/^ \[TTT\] (.*)/, ['msg']],
+  'respawn_location': [/^You got respawned at ([-.0-9]+) ([-.0-9]+) ([-.0-9]+)$/, ['x', 'y', 'z']],
+  'rename': [/^>\[STAFF\] renamed '(.*)' to '(.*)' for easier targeting\./, ['from', 'to']], // DONE
   'unknown': [/^.*/, undefined]
 }
