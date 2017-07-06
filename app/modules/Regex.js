@@ -149,7 +149,7 @@ module.exports.type = {
   'round_start': [/----------------\[Round Start\]----------------/, ''],
   'warden_debug': [/\[Warden Debug\] /, []],
   'warden': [/[[0-9]+:[0-9]+:[0-9]+\] Your warden for today is .*/, []],
-  'msg': [/>(\[DEAD\])?(\[TEAM\])?(\[♥\]\[(.*)\])?(\[.*\])?(?:)?(.*): (.*)/, ['dead', 'team', 'rank', 'donator', 'donator', 'user', 'message']],
+  'msg': [/>(\[DEAD\])?(\[TEAM\])?(\[♥\]\[(.*)\])?(\[.*\])?(?:)?(.*): (.*)/, ['dead', 'team', 'rank', 'donator', 'donator', 'user', 'message']], //DONE
   'pm_msg': [/>.*\[.*->.*\]/, []],
   'drops': [/\[drops\]/, []],
   'zones': [/\[zones\]/, []],
@@ -159,7 +159,7 @@ module.exports.type = {
   'ttt_kill': [/^\[[0-9]+:[0-9]+] -> \[(.*) \((.*)\) killed (.*) \((.*)\) with (.*)\](?: - (BAD ACTION))?/, []],
   'ttt_tase': [/^-> \[(.*) \((.*)\) was tased by (.*)\]/, []],
   'ttt': [/^ \[TTT\] (.*)/, ['msg']],
-  'respawn_location': [/^You got respawned at ([-.0-9]+) ([-.0-9]+) ([-.0-9]+)$/, ['x', 'y', 'z']],
+  'respawn_location': [/^You got respawned at ([-.0-9]+) ([-.0-9]+) ([-.0-9]+)$/, ['x', 'y', 'z']], // DONE
   'rename': [/^>\[STAFF\] renamed '(.*)' to '(.*)' for easier targeting\./, ['from', 'to']], // DONE
   'unknown': [/^.*/, undefined]
 }

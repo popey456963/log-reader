@@ -1,0 +1,24 @@
+[Wed Jul 05 06:25:03.558989 2017] [wsgi:warn] [pid 6447] mod_wsgi: Compiled for Python/2.7.11.
+[Wed Jul 05 06:25:03.559019 2017] [wsgi:warn] [pid 6447] mod_wsgi: Runtime using Python/2.7.12.
+[Wed Jul 05 06:25:03.559072 2017] [mpm_prefork:notice] [pid 6447] AH00163: Apache/2.4.18 (Ubuntu) OpenSSL/1.0.2g mod_wsgi/4.3.0 Python/2.7.12 configured -- resuming normal operations
+[Wed Jul 05 06:25:03.559077 2017] [core:notice] [pid 6447] AH00094: Command line: '/usr/sbin/apache2'
+[Wed Jul 05 07:08:14.075401 2017] [:error] [pid 12093] [client 95.213.177.124:55405] script '/var/www/fastdl/azenv.php' not found or unable to stat, referer: https://proxyradar.com/
+[Wed Jul 05 10:25:15.116609 2017] [:error] [pid 12093] [client 216.218.206.67:49482] PHP Notice:  Undefined index: HTTP_USER_AGENT in /var/www/fastdl/_h5ai/private/php/core/class-setup.php on line 57
+[Wed Jul 05 10:25:15.117874 2017] [:error] [pid 12093] [client 216.218.206.67:49482] 0.018 0.018 -------------------------------- NULL
+[Wed Jul 05 10:25:15.117910 2017] [:error] [pid 12093] [client 216.218.206.67:49482] 0.081 0.063 setup value neither string nor boolean array (\n  'key' => 'HTTP_USER_AGENT',\n  'value' => NULL,\n)
+[Wed Jul 05 10:25:15.117930 2017] [:error] [pid 12093] [client 216.218.206.67:49482] 0.112 0.031 shutdown NULL
+[Wed Jul 05 11:18:07.953704 2017] [:error] [pid 12096] [client 95.213.177.124:39332] script '/var/www/fastdl/azenv.php' not found or unable to stat, referer: https://proxyradar.com/
+[Wed Jul 05 11:28:07.401395 2017] [:error] [pid 12094] [client 178.154.189.32:35353] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/fastdl/php/index.php on line 13
+[Wed Jul 05 15:24:33.099677 2017] [:error] [pid 12093] [client 95.213.177.126:42403] script '/var/www/fastdl/azenv.php' not found or unable to stat, referer: https://proxyradar.com/
+[Wed Jul 05 15:58:37.554112 2017] [:error] [pid 17009] [client 5.188.211.35:46183] PHP Notice:  Undefined variable: sb in /var/www/fastdl/donate/index.php on line 113
+[Wed Jul 05 15:58:40.700880 2017] [:error] [pid 16111] [client 5.188.211.35:53358] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/fastdl/php/index.php on line 13
+[Wed Jul 05 15:58:49.508302 2017] [:error] [pid 17137] [client 5.188.211.35:37022] PHP Warning:  mysqli::__construct(): (HY000/2002): Connection refused in /var/www/fastdl/query_admins.php on line 7
+[Wed Jul 05 17:46:11.807992 2017] [:error] [pid 16111] [client 178.154.189.32:58353] PHP Warning:  mysqli::__construct(): (HY000/1045): Access denied for user 'root'@'localhost' (using password: YES) in /var/www/fastdl/php/index.php on line 13
+[Wed Jul 05 17:46:15.052336 2017] [:error] [pid 17944] [client 95.108.213.13:49447] PHP Notice:  Undefined variable: sb in /var/www/fastdl/donate/index.php on line 113
+[Wed Jul 05 19:28:59.685472 2017] [:error] [pid 13894] [client 95.213.177.125:51832] script '/var/www/fastdl/azenv.php' not found or unable to stat, referer: https://proxyradar.com/
+[Wed Jul 05 19:45:46.889059 2017] [:error] [pid 18672] [client 178.154.189.32:64398] script '/var/www/fastdl/index.php' not found or unable to stat
+[Wed Jul 05 22:04:57.527844 2017] [:error] [pid 19250] [client 45.79.174.97:37730] PHP Notice:  Undefined index: HTTP_USER_AGENT in /var/www/fastdl/_h5ai/private/php/core/class-setup.php on line 57
+[Wed Jul 05 22:04:57.528054 2017] [:error] [pid 19250] [client 45.79.174.97:37730] 0.015 0.015 -------------------------------- NULL
+[Wed Jul 05 22:04:57.528081 2017] [:error] [pid 19250] [client 45.79.174.97:37730] 0.087 0.072 setup value neither string nor boolean array (\n  'key' => 'HTTP_USER_AGENT',\n  'value' => NULL,\n)
+[Wed Jul 05 22:04:57.528098 2017] [:error] [pid 19250] [client 45.79.174.97:37730] 0.110 0.023 shutdown NULL
+[Wed Jul 05 23:38:57.269888 2017] [:error] [pid 20000] [client 95.213.177.124:61852] script '/var/www/fastdl/azenv.php' not found or unable to stat, referer: https://proxyradar.com/

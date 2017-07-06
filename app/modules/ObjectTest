@@ -1,0 +1,11 @@
+matching_paths = []
+
+
+
+describe('chat_message').matches(/> \[chat\] (.+) (.+)s/).has('name', 'message').displayed_as((o) => {
+  return `> ${o.name} ${o.message}`
+}).enable()
+
+describe('chat_message').matches((s) => { return ~s.indexOf('chat')}).has('name', 'message').displayed_as('> ${o.name} ${o.message}').enable()
+
+console.log(matching_paths)

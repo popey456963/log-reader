@@ -24,7 +24,7 @@ let display_default = {
   },
   'bottom-left': {
     'button': true,
-    'cell_button': true, 
+    'cell_button': true,
     'warden': true,
     'round_start': false,
     'respawn_location': true,
@@ -43,9 +43,9 @@ let display_default = {
     'drops': true,
     'zones': true,
     'convar': false,
-    'connected': true,
+    'connected': false,
     'unknown_command': false,
-    'failed_send': true,
+    'failed_send': false,
     'round_start': false
   },
   'bottom-right': {
@@ -194,7 +194,7 @@ LogPage.load = async function (shouldTidy) {
     Materialize.toast('This has been disabled due to a known bug :(', toastr_time)
     // $('#modal1').modal('close')
     // LogPage.load(true)
-    
+
   })
 }
 
@@ -209,6 +209,9 @@ LogPage.displayItem = (item, zoom) => {
       let tags = `${o(item.data.dead)}${o(item.data.team)}${o(item.data.rank)}${o(item.data.donator)}`
       if (tags != '') tags = ' ' + tags
       LogPage.addItem(item.type, `>${tags}${item.data.user}: ${item.data.message.trim()}`)
+      break
+    case 'pm_msg':
+      LogPage.addItem(item.type, item.data)
       break
     case 'damage_taken':
       LogPage.addItem(item.type, `<-- ${item.data.player} | ${item.data.damage} in ${item.data.hits} ${ item.data.hits > 1 ? 'hits' : 'hit' }`)
@@ -257,8 +260,11 @@ LogPage.displayItem = (item, zoom) => {
       break
     case 'rename':
       LogPage.addItem(item.type, `Renamed '${item.data.from}'' to '${item.data.to}'`)
+      break
     case 'respawn_location':
+      console.log(item)
       Materialize.toast(`You were respawned at ${item.data.x} ${item.data.y} ${item.data.z}`, toastr_time)
+      break
     default:
       if (typeof item.data == 'string') {
         LogPage.addItem(item.type, item.data)
@@ -283,7 +289,7 @@ LogPage.addItem = (name, item) => {
 LogPage.sortLine = (line) => {
   line = line.replace(/(\r\n|\n|\r)/gm,"")
   if (LogPage.ignore(line)) return false
-  if (tidy) { 
+  if (tidy) {
     lines.push(line)
     return false
   }
